@@ -1,16 +1,23 @@
-def dfs(current_k, dungeons, visited):
-    max_explored = 0
+answer = 0
+N = 0
+visited = []
 
-    for i, (min_fatigue, consumption) in enumerate(dungeons):
-        if not visited[i] and current_k >= min_fatigue:
-            visited[i] = True
-            next_k = current_k - consumption
-            max_explored = max(max_explored, 1 + dfs(next_k, dungeons, visited))
-            visited[i] = False
 
-    return max_explored
+def dfs(k, cnt, dungeons):
+    global answer
+    if cnt > answer:
+        answer = cnt
+
+    for i in range(N):
+        if k >= dungeons[i][0] and not visited[i]:
+            visited[i] = 1
+            dfs(k - dungeons[i][1], cnt + 1, dungeons)
+            visited[i] = 0
+
 
 def solution(k, dungeons):
-    visited = [False] * len(dungeons)
-    answer = dfs(k, dungeons, visited)
+    global N, visited
+    N = len(dungeons)
+    visited = [0] * N
+    dfs(k, 0, dungeons)
     return answer
