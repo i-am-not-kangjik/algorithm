@@ -4,9 +4,9 @@ def solution(n):
     while(n != 1):
         if n % i == 0:
             n /= i
-            answer.append(i)
+            if i not in answer:
+                answer.append(i)
         else:
             i += 1
             
-    answer = sorted(list(set(answer)))
     return answer
